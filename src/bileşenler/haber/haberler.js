@@ -90,28 +90,44 @@ const data = [
   }
 ];
 
-/*
-  Adım 1: Haber oluşturmak için 'haberYapici' adında bir bileşen(component) oluşturun.
-  Bileşeniniz, argümanı haberleri içeren dizi olarak alan bir fonksiyon olacak,
-  ve aşağıdaki gibi görünen bir DOM düğümü döndürecek:
+const haberYapici = function (dataBase) {
+  const container = document.createElement("div");
+  container.className = "article" ;
+  
+  const h2Div = document.createElement("h2");
+  h2Div.textContent = dataBase.baslik ;
+  container.appendChild (h2Div) ;
 
-  <div class="article">
-    <h2>{haber başlığı}</h2>
-    <p class="tarih">{haber tarihi}</p>
+  const pDiv = document.createElement("p");
+  pDiv.className = "tarih" ;
+  pDiv.textContent = dataBase.tarih ;
+  container.appendChild (pDiv) ;
 
-    {üç ayrı paragraf elementi}
+  const pDiv1 = document.createElement("p");
+  pDiv1.textContent = dataBase.ilkParagraf ;
+  container.appendChild (pDiv1) ;
 
-    <span class="expandButton">+</span>
-  </div>
+  const pDiv2 = document.createElement("p");
+  pDiv2.textContent = dataBase.ikinciParagraf ;
+  container.appendChild (pDiv2) ;
 
-  Adım 2: Hala `haberYapici` içindeyiz, span.expandButton 'a bir click event dinleyici ekleyin.
-  Bu dinleyici div.article öğesine 'article-open' class'ını ekleyip/çıkaracak (toogle).
+  const pDiv3 = document.createElement("p");
+  pDiv3.textContent = dataBase.ucuncuParagraf ;
+  container.appendChild (pDiv3) ;
 
-  Adım 3: Fonksiyonunuzdan bir öğe döndürmeyi unutmayın.
+  const spanDiv= document.createElement("span") ;
+  spanDiv.style.fontSize = "30px" ;
+  spanDiv.className = "expandButton" ;
+  spanDiv.textContent = "+" ;
 
-  Adım 4: Fonksiyonunuzun dışında, tüm datayı döngüye sokun(loop). Bir div.article öğesi oluşturmak ve bunu div.articles içindeki DOM'a eklemek için
-  her yinelemede oluşturduğunuz bileşeninizi kullanacaksınız(bknz. index.html).
+  spanDiv.addEventListener ("click",  () => {
+    container.classList.toggle("article-open");  
+  })
+  container.appendChild(spanDiv);
+  return container ;
 
-  Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
-  Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
-*/
+}; 
+
+const article= document.querySelector(".articles");
+
+data.map(item => article.appendChild(haberYapici(item)));
